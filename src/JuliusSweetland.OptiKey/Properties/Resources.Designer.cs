@@ -2279,6 +2279,15 @@ namespace JuliusSweetland.OptiKey.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Polish (Poland) / Polski (Polska).
+        /// </summary>
+        public static string POLISH_POLAND {
+            get {
+                return ResourceManager.GetString("POLISH_POLAND", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to PREVIOUS.
         /// </summary>
         public static string PREV {

@@ -20,6 +20,7 @@ using CommonViews = JuliusSweetland.OptiKey.UI.Views.Keyboards.Common;
 using EnglishViews = JuliusSweetland.OptiKey.UI.Views.Keyboards.English;
 using FrenchViews = JuliusSweetland.OptiKey.UI.Views.Keyboards.French;
 using GermanViews = JuliusSweetland.OptiKey.UI.Views.Keyboards.German;
+using PolishViews = JuliusSweetland.OptiKey.UI.Views.Keyboards.Polish;
 using ViewModelKeyboards = JuliusSweetland.OptiKey.UI.ViewModels.Keyboards;
 
 namespace JuliusSweetland.OptiKey.UI.Controls
@@ -151,6 +152,9 @@ namespace JuliusSweetland.OptiKey.UI.Controls
             {
                 switch (Settings.Default.KeyboardLanguage)
                 {
+                    case Languages.PolishPoland:
+                        newContent = new PolishViews.Alpha { DataContext = Keyboard };
+                        break;
                     case Languages.EnglishUS:
                     case Languages.EnglishUK:
                     case Languages.EnglishCanada:
@@ -168,6 +172,9 @@ namespace JuliusSweetland.OptiKey.UI.Controls
             {
                 switch (Settings.Default.KeyboardLanguage)
                 {
+                    case Languages.PolishPoland:
+                        newContent = new PolishViews.ConversationAlpha { DataContext = Keyboard };
+                        break;
                     case Languages.EnglishUS:
                     case Languages.EnglishUK:
                     case Languages.EnglishCanada:
@@ -203,6 +210,9 @@ namespace JuliusSweetland.OptiKey.UI.Controls
                     case Languages.GermanGermany:
                         newContent = new GermanViews.Diacritics1 { DataContext = Keyboard };
                         break;
+                    case Languages.PolishPoland:
+                        newContent = new PolishViews.Diacritics1 { DataContext = Keyboard };
+                        break;
                     default:
                         newContent = new CommonViews.Diacritics1 { DataContext = Keyboard };
                         break;
@@ -218,6 +228,9 @@ namespace JuliusSweetland.OptiKey.UI.Controls
                     case Languages.GermanGermany:
                         newContent = new GermanViews.Diacritics2 { DataContext = Keyboard };
                         break;
+                    case Languages.PolishPoland:
+                        newContent = new PolishViews.Diacritics2 { DataContext = Keyboard };
+                        break;
                     default:
                         newContent = new CommonViews.Diacritics2 { DataContext = Keyboard };
                         break;
@@ -232,6 +245,9 @@ namespace JuliusSweetland.OptiKey.UI.Controls
                         break;
                     case Languages.GermanGermany:
                         newContent = new GermanViews.Diacritics3 { DataContext = Keyboard };
+                        break;
+                    case Languages.PolishPoland:
+                        newContent = new PolishViews.Diacritics3 { DataContext = Keyboard };
                         break;
                     default:
                         newContent = new CommonViews.Diacritics3 { DataContext = Keyboard };

@@ -89,7 +89,8 @@ namespace JuliusSweetland.OptiKey.Models
                 { Languages.EnglishUK, defaultList },
                 { Languages.EnglishUS, defaultList },
                 { Languages.FrenchFrance, defaultList }, //Could be customised to include àçéèù
-                { Languages.GermanGermany, defaultList } //Could be customised to include äöüß
+                { Languages.GermanGermany, defaultList }, //Could be customised to include äöüß
+                { Languages.PolishPoland, defaultList }
             };
         }
 
