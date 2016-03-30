@@ -7,7 +7,6 @@ using System.Reactive.Linq;
 using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using JuliusSweetland.OptiKey.Enums;
@@ -37,9 +36,17 @@ namespace JuliusSweetland.OptiKey
     /// </summary>
     public partial class App : Application
     {
+        #region Constants
+
+        private const string GazeTrackerUdpRegex = @"^STREAM_DATA\s(?<instanceTime>\d+)\s(?<x>-?\d+(\.[0-9]+)?)\s(?<y>-?\d+(\.[0-9]+)?)";
+        private const string GitHubRepoName = "optikey";
+        private const string GitHubRepoOwner = "optikey";
+
+        #endregion
+
         #region Private Member Vars
 
-        private readonly static ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+        private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         private readonly Action applyTheme;
 
         #endregion
@@ -79,8 +86,8 @@ namespace JuliusSweetland.OptiKey
 
             //Apply resource language (and listen for changes)
             Action<Languages> applyResourceLanguage = language => OptiKey.Properties.Resources.Culture = language.ToCultureInfo();
-            Settings.Default.OnPropertyChanges(s => s.ResourceLanguage).Subscribe(applyResourceLanguage);
-            applyResourceLanguage(Settings.Default.ResourceLanguage);
+            Settings.Default.OnPropertyChanges(s => s.UiLanguage).Subscribe(applyResourceLanguage);
+            applyResourceLanguage(Settings.Default.UiLanguage);
 
             //Logic to initially apply the theme and change the theme on setting changes
             applyTheme = () =>
@@ -107,7 +114,7 @@ namespace JuliusSweetland.OptiKey
 
         #region On Startup
 
-        private async void App_OnStartup(object sender, StartupEventArgs e)
+        private void App_OnStartup(object sender, StartupEventArgs e)
         {
             try
             {
@@ -130,7 +137,7 @@ namespace JuliusSweetland.OptiKey
                 //Create services
                 var errorNotifyingServices = new List<INotifyErrors>();
                 IAudioService audioService = new AudioService();
-                IDictionaryService dictionaryService = new DictionaryService();
+                IDictionaryService dictionaryService = new DictionaryService(Settings.Default.AutoCompleteMethod);
                 IPublishService publishService = new PublishService();
                 ISuggestionStateService suggestionService = new SuggestionStateService();
                 ICalibrationService calibrationService = CreateCalibrationService();
@@ -149,7 +156,7 @@ namespace JuliusSweetland.OptiKey
                 ReleaseKeysOnApplicationExit(keyStateService, publishService);
 
                 //Compose UI
-                var mainWindow = new MainWindow(audioService, dictionaryService, inputService);
+                var mainWindow = new MainWindow(audioService, dictionaryService, inputService, keyStateService);
                 
                 IWindowManipulationService mainWindowManipulationService = new WindowManipulationService(
                     mainWindow,
@@ -170,8 +177,8 @@ namespace JuliusSweetland.OptiKey
                     size => Settings.Default.MainWindowDockSize = size,
                     t => Settings.Default.MainWindowFullDockThicknessAsPercentageOfScreen = t,
                     t => Settings.Default.MainWindowCollapsedDockThicknessAsPercentageOfFullDockThickness = t);
-
                 errorNotifyingServices.Add(mainWindowManipulationService);
+                mainWindow.WindowManipulationService = mainWindowManipulationService;
 
                 mainViewModel = new MainViewModel(
                     audioService, calibrationService, dictionaryService, keyStateService,
@@ -281,7 +288,7 @@ namespace JuliusSweetland.OptiKey
 
         #region Handle Corrupt Settings
 
-        private void HandleCorruptSettings()
+        private static void HandleCorruptSettings()
         {
             try
             {
@@ -314,7 +321,7 @@ namespace JuliusSweetland.OptiKey
 
         #region Create Service Methods
 
-        private ICalibrationService CreateCalibrationService()
+        private static ICalibrationService CreateCalibrationService()
         {
             switch (Settings.Default.PointsSource)
             {
@@ -330,7 +337,7 @@ namespace JuliusSweetland.OptiKey
             return null;
         }
 
-        private IInputService CreateInputService(
+        private static IInputService CreateInputService(
             IKeyStateService keyStateService,
             IDictionaryService dictionaryService,
             IAudioService audioService,
@@ -348,7 +355,7 @@ namespace JuliusSweetland.OptiKey
                     pointSource = new GazeTrackerSource(
                         Settings.Default.PointTtl,
                         Settings.Default.GazeTrackerUdpPort,
-                        new Regex(Settings.Default.GazeTrackerUdpRegex));
+                        new Regex(GazeTrackerUdpRegex));
                     break;
 
                 case PointsSources.TheEyeTribe:
@@ -391,7 +398,10 @@ namespace JuliusSweetland.OptiKey
                     keySelectionTriggerSource = new KeyFixationSource(
                        Settings.Default.KeySelectionTriggerFixationLockOnTime,
                        Settings.Default.KeySelectionTriggerFixationResumeRequiresLockOn,
-                       Settings.Default.KeySelectionTriggerFixationCompleteTime,
+                       Settings.Default.KeySelectionTriggerFixationDefaultCompleteTime,
+                       Settings.Default.KeySelectionTriggerFixationCompleteTimesByIndividualKey
+                        ? Settings.Default.KeySelectionTriggerFixationCompleteTimesByKeyValues
+                        : null, 
                        Settings.Default.KeySelectionTriggerIncompleteFixationTtl,
                        pointSource.Sequence);
                     break;
@@ -454,7 +464,7 @@ namespace JuliusSweetland.OptiKey
         
         #region Log Diagnostic Info
         
-        private void LogDiagnosticInfo()
+        private static void LogDiagnosticInfo()
         {
             Log.InfoFormat("Assembly version: {0}", DiagnosticInfo.AssemblyVersion);
             var assemblyFileVersion = DiagnosticInfo.AssemblyFileVersion;
@@ -466,6 +476,7 @@ namespace JuliusSweetland.OptiKey
             {
                 Log.InfoFormat("ClickOnce deployment version: {0}", DiagnosticInfo.DeploymentVersion);
             }
+            Log.InfoFormat("Running as admin: {0}", DiagnosticInfo.RunningAsAdministrator);
             Log.InfoFormat("Process elevated: {0}", DiagnosticInfo.IsProcessElevated);
             Log.InfoFormat("Process bitness: {0}", DiagnosticInfo.ProcessBitness);
             Log.InfoFormat("OS version: {0}", DiagnosticInfo.OperatingSystemVersion);
@@ -477,7 +488,7 @@ namespace JuliusSweetland.OptiKey
 
         #region Show Splash Screen
 
-        private async Task<bool> ShowSplashScreen(IInputService inputService, IAudioService audioService, MainViewModel mainViewModel)
+        private static async Task<bool> ShowSplashScreen(IInputService inputService, IAudioService audioService, MainViewModel mainViewModel)
         {
             var taskCompletionSource = new TaskCompletionSource<bool>(); //Used to make this method awaitable on the InteractionRequest callback
 
@@ -488,8 +499,8 @@ namespace JuliusSweetland.OptiKey
                 var message = new StringBuilder();
 
                 message.AppendLine(string.Format(OptiKey.Properties.Resources.VERSION_DESCRIPTION, DiagnosticInfo.AssemblyVersion));
-                message.AppendLine(string.Format(OptiKey.Properties.Resources.KEYBOARD_LANGUAGE_DESCRIPTION, Settings.Default.KeyboardLanguage.ToDescription()));
-                message.AppendLine(string.Format(OptiKey.Properties.Resources.RESOURCE_LANGUAGE_DESCRIPTION, Settings.Default.ResourceLanguage.ToDescription()));
+                message.AppendLine(string.Format(OptiKey.Properties.Resources.KEYBOARD_AND_DICTIONARY_LANGUAGE_DESCRIPTION, Settings.Default.KeyboardAndDictionaryLanguage.ToDescription()));
+                message.AppendLine(string.Format(OptiKey.Properties.Resources.UI_LANGUAGE_DESCRIPTION, Settings.Default.UiLanguage.ToDescription()));
                 message.AppendLine(string.Format(OptiKey.Properties.Resources.POINTING_SOURCE_DESCRIPTION, Settings.Default.PointsSource.ToDescription()));
 
                 var keySelectionSb = new StringBuilder();
@@ -497,7 +508,7 @@ namespace JuliusSweetland.OptiKey
                 switch (Settings.Default.KeySelectionTriggerSource)
                 {
                     case TriggerSources.Fixations:
-                        keySelectionSb.Append(string.Format(OptiKey.Properties.Resources.DURATION_FORMAT, Settings.Default.KeySelectionTriggerFixationCompleteTime.TotalMilliseconds));
+                        keySelectionSb.Append(string.Format(OptiKey.Properties.Resources.DURATION_FORMAT, Settings.Default.KeySelectionTriggerFixationDefaultCompleteTime.TotalMilliseconds));
                         break;
 
                     case TriggerSources.KeyboardKeyDownsUps:
@@ -555,17 +566,17 @@ namespace JuliusSweetland.OptiKey
 
         #region  Check For Updates
 
-        private async Task<bool> CheckForUpdates(IInputService inputService, IAudioService audioService, MainViewModel mainViewModel)
+        private static async Task<bool> CheckForUpdates(IInputService inputService, IAudioService audioService, MainViewModel mainViewModel)
         {
             var taskCompletionSource = new TaskCompletionSource<bool>(); //Used to make this method awaitable on the InteractionRequest callback
 
             if (Settings.Default.CheckForUpdates)
             {
                 Log.InfoFormat("Checking GitHub for updates (repo owner:'{0}', repo name:'{1}').", 
-                    Settings.Default.GitHubRepoOwner, Settings.Default.GitHubRepoName);
+                    GitHubRepoOwner, GitHubRepoName);
 
                 new ObservableGitHubClient(new ProductHeaderValue("OptiKey")).Release
-                    .GetAll(Settings.Default.GitHubRepoOwner, Settings.Default.GitHubRepoName)
+                    .GetAll(GitHubRepoOwner, GitHubRepoName)
                     .Where(release => !release.Prerelease)
                     .Take(1)
                     .ObserveOnDispatcher()
@@ -616,7 +627,7 @@ namespace JuliusSweetland.OptiKey
 
         #region Release Keys On App Exit
 
-        private void ReleaseKeysOnApplicationExit(IKeyStateService keyStateService, IPublishService publishService)
+        private static void ReleaseKeysOnApplicationExit(IKeyStateService keyStateService, IPublishService publishService)
         {
             Current.Exit += (o, args) =>
             {

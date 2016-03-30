@@ -12,7 +12,7 @@ namespace JuliusSweetland.OptiKey.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "12.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "14.0.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -181,20 +181,6 @@ namespace JuliusSweetland.OptiKey.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("^STREAM_DATA\\s(?<instanceTime>\\d+)\\s(?<x>-?\\d+(\\.[0-9]+)?)\\s(?<y>-?\\d+(\\.[0-9]+)?" +
-            ")")]
-        [global::System.Configuration.SettingsManageabilityAttribute(global::System.Configuration.SettingsManageability.Roaming)]
-        public string GazeTrackerUdpRegex {
-            get {
-                return ((string)(this["GazeTrackerUdpRegex"]));
-            }
-            set {
-                this["GazeTrackerUdpRegex"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
         [global::System.Configuration.SettingsManageabilityAttribute(global::System.Configuration.SettingsManageability.Roaming)]
         public bool MultiKeySelectionLockedDownWhenSimulatingKeyStrokes {
@@ -249,12 +235,12 @@ namespace JuliusSweetland.OptiKey.Properties {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("EnglishUK")]
         [global::System.Configuration.SettingsManageabilityAttribute(global::System.Configuration.SettingsManageability.Roaming)]
-        public global::JuliusSweetland.OptiKey.Enums.Languages ResourceLanguage {
+        public global::JuliusSweetland.OptiKey.Enums.Languages UiLanguage {
             get {
-                return ((global::JuliusSweetland.OptiKey.Enums.Languages)(this["ResourceLanguage"]));
+                return ((global::JuliusSweetland.OptiKey.Enums.Languages)(this["UiLanguage"]));
             }
             set {
-                this["ResourceLanguage"] = value;
+                this["UiLanguage"] = value;
             }
         }
         
@@ -262,12 +248,12 @@ namespace JuliusSweetland.OptiKey.Properties {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("00:00:01.2500000")]
         [global::System.Configuration.SettingsManageabilityAttribute(global::System.Configuration.SettingsManageability.Roaming)]
-        public global::System.TimeSpan KeySelectionTriggerFixationCompleteTime {
+        public global::System.TimeSpan KeySelectionTriggerFixationDefaultCompleteTime {
             get {
-                return ((global::System.TimeSpan)(this["KeySelectionTriggerFixationCompleteTime"]));
+                return ((global::System.TimeSpan)(this["KeySelectionTriggerFixationDefaultCompleteTime"]));
             }
             set {
-                this["KeySelectionTriggerFixationCompleteTime"] = value;
+                this["KeySelectionTriggerFixationDefaultCompleteTime"] = value;
             }
         }
         
@@ -520,20 +506,6 @@ namespace JuliusSweetland.OptiKey.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("(?:\\s*)(([_a-zA-Z0-9-\\+]+(\\.[_a-zA-Z0-9-\\+]+)*@[a-zA-Z0-9-]+(\\.[a-zA-Z0-9-]+)*(\\." +
-            "[a-zA-Z]{2,6}))|(([a-zA-Z]\\.){2,})|([a-zA-Z]+([\'-][a-zA-Z]+)*))(?:\\s*)")]
-        [global::System.Configuration.SettingsManageabilityAttribute(global::System.Configuration.SettingsManageability.Roaming)]
-        public string WordRegex {
-            get {
-                return ((string)(this["WordRegex"]));
-            }
-            set {
-                this["WordRegex"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("Fixations")]
         [global::System.Configuration.SettingsManageabilityAttribute(global::System.Configuration.SettingsManageability.Roaming)]
         public global::JuliusSweetland.OptiKey.Enums.TriggerSources PointSelectionTriggerSource {
@@ -646,32 +618,6 @@ namespace JuliusSweetland.OptiKey.Properties {
             }
             set {
                 this["ShowSplashScreen"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("juliussweetland")]
-        [global::System.Configuration.SettingsManageabilityAttribute(global::System.Configuration.SettingsManageability.Roaming)]
-        public string GitHubRepoOwner {
-            get {
-                return ((string)(this["GitHubRepoOwner"]));
-            }
-            set {
-                this["GitHubRepoOwner"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("optikey")]
-        [global::System.Configuration.SettingsManageabilityAttribute(global::System.Configuration.SettingsManageability.Roaming)]
-        public string GitHubRepoName {
-            get {
-                return ((string)(this["GitHubRepoName"]));
-            }
-            set {
-                this["GitHubRepoName"] = value;
             }
         }
         
@@ -1249,32 +1195,6 @@ namespace JuliusSweetland.OptiKey.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("optikeyfeedback@gmail.com")]
-        [global::System.Configuration.SettingsManageabilityAttribute(global::System.Configuration.SettingsManageability.Roaming)]
-        public string BassRegistrationEmail {
-            get {
-                return ((string)(this["BassRegistrationEmail"]));
-            }
-            set {
-                this["BassRegistrationEmail"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("2X24252025152222")]
-        [global::System.Configuration.SettingsManageabilityAttribute(global::System.Configuration.SettingsManageability.Roaming)]
-        public string BassRegistrationKey {
-            get {
-                return ((string)(this["BassRegistrationKey"]));
-            }
-            set {
-                this["BassRegistrationKey"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("Alpha")]
         [global::System.Configuration.SettingsManageabilityAttribute(global::System.Configuration.SettingsManageability.Roaming)]
         public global::JuliusSweetland.OptiKey.Enums.Keyboards StartupKeyboard {
@@ -1355,12 +1275,12 @@ namespace JuliusSweetland.OptiKey.Properties {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("EnglishUK")]
         [global::System.Configuration.SettingsManageabilityAttribute(global::System.Configuration.SettingsManageability.Roaming)]
-        public global::JuliusSweetland.OptiKey.Enums.Languages KeyboardLanguage {
+        public global::JuliusSweetland.OptiKey.Enums.Languages KeyboardAndDictionaryLanguage {
             get {
-                return ((global::JuliusSweetland.OptiKey.Enums.Languages)(this["KeyboardLanguage"]));
+                return ((global::JuliusSweetland.OptiKey.Enums.Languages)(this["KeyboardAndDictionaryLanguage"]));
             }
             set {
-                this["KeyboardLanguage"] = value;
+                this["KeyboardAndDictionaryLanguage"] = value;
             }
         }
         
@@ -1374,6 +1294,230 @@ namespace JuliusSweetland.OptiKey.Properties {
             }
             set {
                 this["PublishVirtualKeyCodesForCharacters"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        [global::System.Configuration.SettingsManageabilityAttribute(global::System.Configuration.SettingsManageability.Roaming)]
+        public bool MagnifySuppressedForScrollingActions {
+            get {
+                return ((bool)(this["MagnifySuppressedForScrollingActions"]));
+            }
+            set {
+                this["MagnifySuppressedForScrollingActions"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1,1,1,1")]
+        [global::System.Configuration.SettingsManageabilityAttribute(global::System.Configuration.SettingsManageability.Roaming)]
+        public global::System.Windows.Thickness ConversationBorderThickness {
+            get {
+                return ((global::System.Windows.Thickness)(this["ConversationBorderThickness"]));
+            }
+            set {
+                this["ConversationBorderThickness"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("3")]
+        [global::System.Configuration.SettingsManageabilityAttribute(global::System.Configuration.SettingsManageability.Roaming)]
+        public int NGramAutoCompleteGramCount {
+            get {
+                return ((int)(this["NGramAutoCompleteGramCount"]));
+            }
+            set {
+                this["NGramAutoCompleteGramCount"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("2")]
+        [global::System.Configuration.SettingsManageabilityAttribute(global::System.Configuration.SettingsManageability.Roaming)]
+        public int NGramAutoCompleteLeadingSpaceCount {
+            get {
+                return ((int)(this["NGramAutoCompleteLeadingSpaceCount"]));
+            }
+            set {
+                this["NGramAutoCompleteLeadingSpaceCount"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        [global::System.Configuration.SettingsManageabilityAttribute(global::System.Configuration.SettingsManageability.Roaming)]
+        public int NGramAutoCompleteTrailingSpaceCount {
+            get {
+                return ((int)(this["NGramAutoCompleteTrailingSpaceCount"]));
+            }
+            set {
+                this["NGramAutoCompleteTrailingSpaceCount"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        [global::System.Configuration.SettingsManageabilityAttribute(global::System.Configuration.SettingsManageability.Roaming)]
+        public bool KeySelectionTriggerFixationCompleteTimesByIndividualKey {
+            get {
+                return ((bool)(this["KeySelectionTriggerFixationCompleteTimesByIndividualKey"]));
+            }
+            set {
+                this["KeySelectionTriggerFixationCompleteTimesByIndividualKey"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("<?xml version=\"1.0\" encoding=\"utf-16\"?>\r\n<dictionary>\r\n  <item>\r\n    <key>\r\n     " +
+            " <keyValue>\r\n        <functionKey>AlphaKeyboard</functionKey>\r\n      </keyValue>" +
+            "\r\n    </key>\r\n    <value>\r\n      <ticks>PT1.75S</ticks>\r\n    </value>\r\n  </item>" +
+            "\r\n  <item>\r\n    <key>\r\n      <keyValue>\r\n        <functionKey>BackFromKeyboard</" +
+            "functionKey>\r\n      </keyValue>\r\n    </key>\r\n    <value>\r\n      <ticks>PT1.75S</" +
+            "ticks>\r\n    </value>\r\n  </item>\r\n  <item>\r\n    <key>\r\n      <keyValue>\r\n        " +
+            "<functionKey>ConversationAlphaKeyboard</functionKey>\r\n      </keyValue>\r\n    </k" +
+            "ey>\r\n    <value>\r\n      <ticks>PT1.75S</ticks>\r\n    </value>\r\n  </item>\r\n  <item" +
+            ">\r\n    <key>\r\n      <keyValue>\r\n        <functionKey>ConversationNumericAndSymbo" +
+            "lsKeyboard</functionKey>\r\n      </keyValue>\r\n    </key>\r\n    <value>\r\n      <tic" +
+            "ks>PT1.75S</ticks>\r\n    </value>\r\n  </item>\r\n  <item>\r\n    <key>\r\n      <keyValu" +
+            "e>\r\n        <functionKey>Currencies1Keyboard</functionKey>\r\n      </keyValue>\r\n " +
+            "   </key>\r\n    <value>\r\n      <ticks>PT1.75S</ticks>\r\n    </value>\r\n  </item>\r\n " +
+            " <item>\r\n    <key>\r\n      <keyValue>\r\n        <functionKey>Currencies2Keyboard</" +
+            "functionKey>\r\n      </keyValue>\r\n    </key>\r\n    <value>\r\n      <ticks>PT1.75S</" +
+            "ticks>\r\n    </value>\r\n  </item>\r\n  <item>\r\n    <key>\r\n      <keyValue>\r\n        " +
+            "<functionKey>Diacritic1Keyboard</functionKey>\r\n      </keyValue>\r\n    </key>\r\n  " +
+            "  <value>\r\n      <ticks>PT1.75S</ticks>\r\n    </value>\r\n  </item>\r\n  <item>\r\n    " +
+            "<key>\r\n      <keyValue>\r\n        <functionKey>Diacritic2Keyboard</functionKey>\r\n" +
+            "      </keyValue>\r\n    </key>\r\n    <value>\r\n      <ticks>PT1.75S</ticks>\r\n    </" +
+            "value>\r\n  </item>\r\n  <item>\r\n    <key>\r\n      <keyValue>\r\n        <functionKey>D" +
+            "iacritic3Keyboard</functionKey>\r\n      </keyValue>\r\n    </key>\r\n    <value>\r\n   " +
+            "   <ticks>PT1.75S</ticks>\r\n    </value>\r\n  </item>\r\n  <item>\r\n    <key>\r\n      <" +
+            "keyValue>\r\n        <functionKey>LanguageKeyboard</functionKey>\r\n      </keyValue" +
+            ">\r\n    </key>\r\n    <value>\r\n      <ticks>PT1.75S</ticks>\r\n    </value>\r\n  </item" +
+            ">\r\n  <item>\r\n    <key>\r\n      <keyValue>\r\n        <functionKey>MenuKeyboard</fun" +
+            "ctionKey>\r\n      </keyValue>\r\n    </key>\r\n    <value>\r\n      <ticks>PT1.75S</tic" +
+            "ks>\r\n    </value>\r\n  </item>\r\n  <item>\r\n    <key>\r\n      <keyValue>\r\n        <fu" +
+            "nctionKey>MouseKeyboard</functionKey>\r\n      </keyValue>\r\n    </key>\r\n    <value" +
+            ">\r\n      <ticks>PT1.75S</ticks>\r\n    </value>\r\n  </item>\r\n  <item>\r\n    <key>\r\n " +
+            "     <keyValue>\r\n        <functionKey>NumericAndSymbols1Keyboard</functionKey>\r\n" +
+            "      </keyValue>\r\n    </key>\r\n    <value>\r\n      <ticks>PT1.75S</ticks>\r\n    </" +
+            "value>\r\n  </item>\r\n  <item>\r\n    <key>\r\n      <keyValue>\r\n        <functionKey>N" +
+            "umericAndSymbols2Keyboard</functionKey>\r\n      </keyValue>\r\n    </key>\r\n    <val" +
+            "ue>\r\n      <ticks>PT1.75S</ticks>\r\n    </value>\r\n  </item>\r\n  <item>\r\n    <key>\r" +
+            "\n      <keyValue>\r\n        <functionKey>NumericAndSymbols3Keyboard</functionKey>" +
+            "\r\n      </keyValue>\r\n    </key>\r\n    <value>\r\n      <ticks>PT1.75S</ticks>\r\n    " +
+            "</value>\r\n  </item>\r\n  <item>\r\n    <key>\r\n      <keyValue>\r\n        <functionKey" +
+            ">PhysicalKeysKeyboard</functionKey>\r\n      </keyValue>\r\n    </key>\r\n    <value>\r" +
+            "\n      <ticks>PT1.75S</ticks>\r\n    </value>\r\n  </item>\r\n  <item>\r\n    <key>\r\n   " +
+            "   <keyValue>\r\n        <functionKey>SizeAndPositionKeyboard</functionKey>\r\n     " +
+            " </keyValue>\r\n    </key>\r\n    <value>\r\n      <ticks>PT1.75S</ticks>\r\n    </value" +
+            ">\r\n  </item>\r\n  <item>\r\n    <key>\r\n      <keyValue>\r\n        <functionKey>DutchB" +
+            "elgium</functionKey>\r\n      </keyValue>\r\n    </key>\r\n    <value>\r\n      <ticks>P" +
+            "T1.75S</ticks>\r\n    </value>\r\n  </item>\r\n  <item>\r\n    <key>\r\n      <keyValue>\r\n" +
+            "        <functionKey>DutchNetherlands</functionKey>\r\n      </keyValue>\r\n    </ke" +
+            "y>\r\n    <value>\r\n      <ticks>PT1.75S</ticks>\r\n    </value>\r\n  </item>\r\n  <item>" +
+            "\r\n    <key>\r\n      <keyValue>\r\n        <functionKey>EnglishCanada</functionKey>\r" +
+            "\n      </keyValue>\r\n    </key>\r\n    <value>\r\n      <ticks>PT1.75S</ticks>\r\n    <" +
+            "/value>\r\n  </item>\r\n  <item>\r\n    <key>\r\n      <keyValue>\r\n        <functionKey>" +
+            "EnglishUK</functionKey>\r\n      </keyValue>\r\n    </key>\r\n    <value>\r\n      <tick" +
+            "s>PT1.75S</ticks>\r\n    </value>\r\n  </item>\r\n  <item>\r\n    <key>\r\n      <keyValue" +
+            ">\r\n        <functionKey>EnglishUS</functionKey>\r\n      </keyValue>\r\n    </key>\r\n" +
+            "    <value>\r\n      <ticks>PT1.75S</ticks>\r\n    </value>\r\n  </item>\r\n  <item>\r\n  " +
+            "  <key>\r\n      <keyValue>\r\n        <functionKey>FrenchFrance</functionKey>\r\n    " +
+            "  </keyValue>\r\n    </key>\r\n    <value>\r\n      <ticks>PT1.75S</ticks>\r\n    </valu" +
+            "e>\r\n  </item>\r\n  <item>\r\n    <key>\r\n      <keyValue>\r\n        <functionKey>Germa" +
+            "nGermany</functionKey>\r\n      </keyValue>\r\n    </key>\r\n    <value>\r\n      <ticks" +
+            ">PT1.75S</ticks>\r\n    </value>\r\n  </item>\r\n  <item>\r\n    <key>\r\n      <keyValue>" +
+            "\r\n        <functionKey>RussianRussia</functionKey>\r\n      </keyValue>\r\n    </key" +
+            ">\r\n    <value>\r\n      <ticks>PT1.75S</ticks>\r\n    </value>\r\n  </item>\r\n  <item>\r" +
+            "\n    <key>\r\n      <keyValue>\r\n        <functionKey>AddToDictionary</functionKey>" +
+            "\r\n      </keyValue>\r\n    </key>\r\n    <value>\r\n      <ticks>PT2S</ticks>\r\n    </v" +
+            "alue>\r\n  </item>\r\n  <item>\r\n    <key>\r\n      <keyValue>\r\n        <functionKey>Ba" +
+            "ckMany</functionKey>\r\n      </keyValue>\r\n    </key>\r\n    <value>\r\n      <ticks>P" +
+            "T1.75S</ticks>\r\n    </value>\r\n  </item>\r\n  <item>\r\n    <key>\r\n      <keyValue>\r\n" +
+            "        <functionKey>BackOne</functionKey>\r\n      </keyValue>\r\n    </key>\r\n    <" +
+            "value>\r\n      <ticks>PT1.75S</ticks>\r\n    </value>\r\n  </item>\r\n  <item>\r\n    <ke" +
+            "y>\r\n      <keyValue>\r\n        <functionKey>Calibrate</functionKey>\r\n      </keyV" +
+            "alue>\r\n    </key>\r\n    <value>\r\n      <ticks>PT1.75S</ticks>\r\n    </value>\r\n  </" +
+            "item>\r\n  <item>\r\n    <key>\r\n      <keyValue>\r\n        <functionKey>ClearScratchp" +
+            "ad</functionKey>\r\n      </keyValue>\r\n    </key>\r\n    <value>\r\n      <ticks>PT2S<" +
+            "/ticks>\r\n    </value>\r\n  </item>\r\n  <item>\r\n    <key>\r\n      <keyValue>\r\n       " +
+            " <functionKey>DecreaseOpacity</functionKey>\r\n      </keyValue>\r\n    </key>\r\n    " +
+            "<value>\r\n      <ticks>PT1.75S</ticks>\r\n    </value>\r\n  </item>\r\n  <item>\r\n    <k" +
+            "ey>\r\n      <keyValue>\r\n        <functionKey>IncreaseOpacity</functionKey>\r\n     " +
+            " </keyValue>\r\n    </key>\r\n    <value>\r\n      <ticks>PT1.75S</ticks>\r\n    </value" +
+            ">\r\n  </item>\r\n  <item>\r\n    <key>\r\n      <keyValue>\r\n        <functionKey>Minimi" +
+            "se</functionKey>\r\n      </keyValue>\r\n    </key>\r\n    <value>\r\n      <ticks>PT1.7" +
+            "5S</ticks>\r\n    </value>\r\n  </item>\r\n  <item>\r\n    <key>\r\n      <keyValue>\r\n    " +
+            "    <functionKey>MultiKeySelectionIsOn</functionKey>\r\n      </keyValue>\r\n    </k" +
+            "ey>\r\n    <value>\r\n      <ticks>PT1.75S</ticks>\r\n    </value>\r\n  </item>\r\n  <item" +
+            ">\r\n    <key>\r\n      <keyValue>\r\n        <functionKey>NoQuestionResult</functionK" +
+            "ey>\r\n      </keyValue>\r\n    </key>\r\n    <value>\r\n      <ticks>PT1.75S</ticks>\r\n " +
+            "   </value>\r\n  </item>\r\n  <item>\r\n    <key>\r\n      <keyValue>\r\n        <function" +
+            "Key>Quit</functionKey>\r\n      </keyValue>\r\n    </key>\r\n    <value>\r\n      <ticks" +
+            ">PT2S</ticks>\r\n    </value>\r\n  </item>\r\n  <item>\r\n    <key>\r\n      <keyValue>\r\n " +
+            "       <functionKey>Sleep</functionKey>\r\n      </keyValue>\r\n    </key>\r\n    <val" +
+            "ue>\r\n      <ticks>PT1.75S</ticks>\r\n    </value>\r\n  </item>\r\n  <item>\r\n    <key>\r" +
+            "\n      <keyValue>\r\n        <functionKey>Speak</functionKey>\r\n      </keyValue>\r\n" +
+            "    </key>\r\n    <value>\r\n      <ticks>PT1.75S</ticks>\r\n    </value>\r\n  </item>\r\n" +
+            "  <item>\r\n    <key>\r\n      <keyValue>\r\n        <functionKey>YesQuestionResult</f" +
+            "unctionKey>\r\n      </keyValue>\r\n    </key>\r\n    <value>\r\n      <ticks>PT1.75S</t" +
+            "icks>\r\n    </value>\r\n  </item>\r\n  <item>\r\n    <key>\r\n      <keyValue>\r\n        <" +
+            "functionKey>LeftAlt</functionKey>\r\n      </keyValue>\r\n    </key>\r\n    <value>\r\n " +
+            "     <ticks>PT1.5S</ticks>\r\n    </value>\r\n  </item>\r\n  <item>\r\n    <key>\r\n      " +
+            "<keyValue>\r\n        <functionKey>LeftCtrl</functionKey>\r\n      </keyValue>\r\n    " +
+            "</key>\r\n    <value>\r\n      <ticks>PT1.5S</ticks>\r\n    </value>\r\n  </item>\r\n  <it" +
+            "em>\r\n    <key>\r\n      <keyValue>\r\n        <functionKey>LeftShift</functionKey>\r\n" +
+            "      </keyValue>\r\n    </key>\r\n    <value>\r\n      <ticks>PT1.5S</ticks>\r\n    </v" +
+            "alue>\r\n  </item>\r\n  <item>\r\n    <key>\r\n      <keyValue>\r\n        <functionKey>Le" +
+            "ftWin</functionKey>\r\n      </keyValue>\r\n    </key>\r\n    <value>\r\n      <ticks>PT" +
+            "1.5S</ticks>\r\n    </value>\r\n  </item>\r\n  <item>\r\n    <key>\r\n      <keyValue>\r\n  " +
+            "      <functionKey>NextSuggestions</functionKey>\r\n      </keyValue>\r\n    </key>\r" +
+            "\n    <value>\r\n      <ticks>PT1.75S</ticks>\r\n    </value>\r\n  </item>\r\n  <item>\r\n " +
+            "   <key>\r\n      <keyValue>\r\n        <functionKey>PreviousSuggestions</functionKe" +
+            "y>\r\n      </keyValue>\r\n    </key>\r\n    <value>\r\n      <ticks>PT1.75S</ticks>\r\n  " +
+            "  </value>\r\n  </item>\r\n  <item>\r\n    <key>\r\n      <keyValue>\r\n        <functionK" +
+            "ey>Suggestion1</functionKey>\r\n      </keyValue>\r\n    </key>\r\n    <value>\r\n      " +
+            "<ticks>PT1.75S</ticks>\r\n    </value>\r\n  </item>\r\n  <item>\r\n    <key>\r\n      <key" +
+            "Value>\r\n        <functionKey>Suggestion2</functionKey>\r\n      </keyValue>\r\n    <" +
+            "/key>\r\n    <value>\r\n      <ticks>PT1.75S</ticks>\r\n    </value>\r\n  </item>\r\n  <it" +
+            "em>\r\n    <key>\r\n      <keyValue>\r\n        <functionKey>Suggestion3</functionKey>" +
+            "\r\n      </keyValue>\r\n    </key>\r\n    <value>\r\n      <ticks>PT1.75S</ticks>\r\n    " +
+            "</value>\r\n  </item>\r\n  <item>\r\n    <key>\r\n      <keyValue>\r\n        <functionKey" +
+            ">Suggestion4</functionKey>\r\n      </keyValue>\r\n    </key>\r\n    <value>\r\n      <t" +
+            "icks>PT1.75S</ticks>\r\n    </value>\r\n  </item>\r\n  <item>\r\n    <key>\r\n      <keyVa" +
+            "lue>\r\n        <functionKey>Suggestion5</functionKey>\r\n      </keyValue>\r\n    </k" +
+            "ey>\r\n    <value>\r\n      <ticks>PT1.75S</ticks>\r\n    </value>\r\n  </item>\r\n  <item" +
+            ">\r\n    <key>\r\n      <keyValue>\r\n        <functionKey>Suggestion6</functionKey>\r\n" +
+            "      </keyValue>\r\n    </key>\r\n    <value>\r\n      <ticks>PT1.75S</ticks>\r\n    </" +
+            "value>\r\n  </item>\r\n</dictionary>")]
+        [global::System.Configuration.SettingsManageabilityAttribute(global::System.Configuration.SettingsManageability.Roaming)]
+        public global::JuliusSweetland.OptiKey.Models.SerializableDictionaryOfTimeSpanByKeyValues KeySelectionTriggerFixationCompleteTimesByKeyValues {
+            get {
+                return ((global::JuliusSweetland.OptiKey.Models.SerializableDictionaryOfTimeSpanByKeyValues)(this["KeySelectionTriggerFixationCompleteTimesByKeyValues"]));
+            }
+            set {
+                this["KeySelectionTriggerFixationCompleteTimesByKeyValues"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("NGram")]
+        public global::JuliusSweetland.OptiKey.Enums.AutoCompleteMethods AutoCompleteMethod {
+            get {
+                return ((global::JuliusSweetland.OptiKey.Enums.AutoCompleteMethods)(this["AutoCompleteMethod"]));
+            }
+            set {
+                this["AutoCompleteMethod"] = value;
             }
         }
     }

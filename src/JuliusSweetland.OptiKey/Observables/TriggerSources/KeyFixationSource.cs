@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Linq;
 using System.Reactive;
 using System.Reactive.Linq;
+using JuliusSweetland.OptiKey.Enums;
+using JuliusSweetland.OptiKey.Extensions;
 using JuliusSweetland.OptiKey.Models;
 
 namespace JuliusSweetland.OptiKey.Observables.TriggerSources
@@ -19,7 +20,8 @@ namespace JuliusSweetland.OptiKey.Observables.TriggerSources
 
         private readonly TimeSpan lockOnTime;
         private readonly bool resumeRequiresLockOn;
-        private readonly TimeSpan timeToCompleteTrigger;
+        private readonly TimeSpan defaultTimeToCompleteTrigger;
+        private readonly IDictionary<KeyValue, TimeSpan> timeToCompleteTriggerByKey;
         private readonly TimeSpan incompleteFixationTtl;
         private readonly IObservable<Timestamped<PointAndKeyValue?>> pointAndKeyValueSource;
         private readonly ConcurrentDictionary<KeyValue, long> incompleteFixationProgress;
@@ -34,13 +36,15 @@ namespace JuliusSweetland.OptiKey.Observables.TriggerSources
         public KeyFixationSource(
             TimeSpan lockOnTime,
             bool resumeRequiresLockOn,
-            TimeSpan timeToCompleteTrigger,
+            TimeSpan defaultTimeToCompleteTrigger,
+            IDictionary<KeyValue, TimeSpan> timeToCompleteTriggerByKey,
             TimeSpan incompleteFixationTtl,
             IObservable<Timestamped<PointAndKeyValue?>> pointAndKeyValueSource)
         {
             this.lockOnTime = lockOnTime;
             this.resumeRequiresLockOn = resumeRequiresLockOn;
-            this.timeToCompleteTrigger = timeToCompleteTrigger;
+            this.defaultTimeToCompleteTrigger = defaultTimeToCompleteTrigger;
+            this.timeToCompleteTriggerByKey = timeToCompleteTriggerByKey ?? new Dictionary<KeyValue, TimeSpan>();
             this.incompleteFixationTtl = incompleteFixationTtl;
             this.pointAndKeyValueSource = pointAndKeyValueSource;
 
@@ -51,6 +55,8 @@ namespace JuliusSweetland.OptiKey.Observables.TriggerSources
         #endregion
 
         #region Properties
+
+        public RunningStates State { get; set; }
 
         public KeyEnabledStates KeyEnabledStates { get; set; }
 
@@ -72,6 +78,7 @@ namespace JuliusSweetland.OptiKey.Observables.TriggerSources
 
                         var pointAndKeyValueSubscription = pointAndKeyValueSource
                             .Where(_ => disposed == false)
+                            .Where(_ => State == RunningStates.Running)
                             .Where(tp => tp.Value != null) //Filter out stale indicators - the fixation progress is not reset by the points sequence being stale
                             .Select(tp => new Timestamped<PointAndKeyValue>(tp.Value.Value, tp.Timestamp))
                             .Buffer(2, 1) //Sliding buffer of 2 (last & current) that moves by 1 value at a time
@@ -189,6 +196,9 @@ namespace JuliusSweetland.OptiKey.Observables.TriggerSources
                                             }
                                         }
 
+                                        var timeToCompleteTrigger = timeToCompleteTriggerByKey.GetValueOrDefault(
+                                            fixationCentrePointAndKeyValue.Value.KeyValue.Value,
+                                            defaultTimeToCompleteTrigger);
                                         var progress = (((double)(storedProgress + fixationSpan.Ticks)) / (double)timeToCompleteTrigger.Ticks);
 
                                         //Publish a high signal if progress is 1 (100%), otherwise just publish progress (filter out 0 as this is a progress reset signal)

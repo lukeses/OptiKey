@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using System.Windows;
 using JuliusSweetland.OptiKey.Enums;
 using JuliusSweetland.OptiKey.Extensions;
@@ -17,7 +16,7 @@ namespace JuliusSweetland.OptiKey.Services
     {
         #region Fields
 
-        private readonly static ILog Log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        private static readonly ILog Log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         private readonly IKeyStateService keyStateService;
         private readonly IDictionaryService dictionaryService;
@@ -428,9 +427,18 @@ namespace JuliusSweetland.OptiKey.Services
 
         public void RequestSuspend()
         {
+            Log.InfoFormat("RequestSuspend received. SuspendRequestCount={0} before it is incremented.", suspendRequestCount);
             lock (suspendRequestLock)
             {
                 suspendRequestCount++;
+                if (keySelectionTriggerSource.State == RunningStates.Running)
+                {
+                    keySelectionTriggerSource.State = RunningStates.Paused;
+                }
+                if (pointSelectionTriggerSource.State == RunningStates.Running)
+                {
+                    pointSelectionTriggerSource.State = RunningStates.Paused;
+                }
                 if (pointSource.State == RunningStates.Running)
                 {
                     pointSource.State = RunningStates.Paused;
@@ -440,11 +448,20 @@ namespace JuliusSweetland.OptiKey.Services
 
         public void RequestResume()
         {
+            Log.InfoFormat("RequestResume received. SuspendRequestCount={0} before it is decremented.", suspendRequestCount);
             lock (suspendRequestLock)
             {
                 suspendRequestCount--;
                 if (suspendRequestCount == 0)
                 {
+                    if (keySelectionTriggerSource != null)
+                    {
+                        keySelectionTriggerSource.State = RunningStates.Running;
+                    }
+                    if (pointSelectionTriggerSource != null)
+                    {
+                        pointSelectionTriggerSource.State = RunningStates.Running;
+                    }
                     if (pointSource != null)
                     {
                         pointSource.State = RunningStates.Running;

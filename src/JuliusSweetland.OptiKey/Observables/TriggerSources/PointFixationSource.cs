@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reactive;
 using System.Reactive.Linq;
-using System.Windows;
+using JuliusSweetland.OptiKey.Enums;
 using JuliusSweetland.OptiKey.Extensions;
 using JuliusSweetland.OptiKey.Models;
 
@@ -43,7 +43,9 @@ namespace JuliusSweetland.OptiKey.Observables.TriggerSources
 
         #region Properties
 
-        public KeyEnabledStates KeyEnabledStates { get; set; } //Irrelevent on point trigger
+        public RunningStates State { get; set; }
+
+        public KeyEnabledStates KeyEnabledStates { get; set; } //Irrelevant on point trigger
 
         public IObservable<TriggerSignal> Sequence
         {
@@ -63,6 +65,7 @@ namespace JuliusSweetland.OptiKey.Observables.TriggerSources
                         
                         var pointAndKeyValueSubscription = pointAndKeyValueSource
                             .Where(_ => disposed == false)
+                            .Where(_ => State == RunningStates.Running)
                             .Where(tp => tp.Value != null) //Filter out stale indicators - the fixation progress is not reset by the points sequence being stale
                             .Select(tp => new Timestamped<PointAndKeyValue>(tp.Value.Value, tp.Timestamp))
                             .Subscribe(point =>

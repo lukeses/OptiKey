@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using System.Windows;
 using JuliusSweetland.OptiKey.Enums;
 using JuliusSweetland.OptiKey.Extensions;
@@ -9,7 +8,6 @@ using JuliusSweetland.OptiKey.Models;
 using JuliusSweetland.OptiKey.Properties;
 using JuliusSweetland.OptiKey.UI.ViewModels.Keyboards;
 using JuliusSweetland.OptiKey.UI.ViewModels.Keyboards.Base;
-using Size = JuliusSweetland.OptiKey.UI.ViewModels.Keyboards.SizeAndPosition;
 
 namespace JuliusSweetland.OptiKey.UI.ViewModels
 {
@@ -101,7 +99,7 @@ namespace JuliusSweetland.OptiKey.UI.ViewModels
 
                 var points = tuple.Item1;
                 var singleKeyValue = tuple.Item2 != null || tuple.Item3 != null
-                    ? new KeyValue { FunctionKey = tuple.Item2, String = tuple.Item3 }
+                    ? new KeyValue (tuple.Item2, tuple.Item3 )
                     : (KeyValue?)null;
                 var multiKeySelection = tuple.Item4;
 
@@ -302,6 +300,51 @@ namespace JuliusSweetland.OptiKey.UI.ViewModels
                         Keyboard = new Diacritics3();
                         break;
 
+                    case FunctionKeys.DutchBelgium:
+                        Log.Info("Changing keyboard language to DutchBelgium.");
+                        InputService.RequestSuspend(); //Reloading the dictionary locks the UI thread, so suspend input service to prevent accidental selections until complete
+                        Settings.Default.KeyboardAndDictionaryLanguage = Languages.DutchBelgium;
+                        InputService.RequestResume();
+                        Log.Info("Changing keyboard to Menu.");
+                        Keyboard = new Menu(() => Keyboard = currentKeyboard);
+                        break;
+
+                    case FunctionKeys.DutchNetherlands:
+                        Log.Info("Changing keyboard language to DutchNetherlands.");
+                        InputService.RequestSuspend(); //Reloading the dictionary locks the UI thread, so suspend input service to prevent accidental selections until complete
+                        Settings.Default.KeyboardAndDictionaryLanguage = Languages.DutchNetherlands;
+                        InputService.RequestResume();
+                        Log.Info("Changing keyboard to Menu.");
+                        Keyboard = new Menu(() => Keyboard = currentKeyboard);
+                        break;
+
+                    case FunctionKeys.EnglishCanada:
+                        Log.Info("Changing keyboard language to EnglishCanada.");
+                        InputService.RequestSuspend(); //Reloading the dictionary locks the UI thread, so suspend input service to prevent accidental selections until complete
+                        Settings.Default.KeyboardAndDictionaryLanguage = Languages.EnglishCanada;
+                        InputService.RequestResume();
+                        Log.Info("Changing keyboard to Menu.");
+                        Keyboard = new Menu(() => Keyboard = currentKeyboard);
+                        break;
+
+                    case FunctionKeys.EnglishUK:
+                        Log.Info("Changing keyboard language to EnglishUK.");
+                        InputService.RequestSuspend(); //Reloading the dictionary locks the UI thread, so suspend input service to prevent accidental selections until complete
+                        Settings.Default.KeyboardAndDictionaryLanguage = Languages.EnglishUK;
+                        InputService.RequestResume();
+                        Log.Info("Changing keyboard to Menu.");
+                        Keyboard = new Menu(() => Keyboard = currentKeyboard);
+                        break;
+
+                    case FunctionKeys.EnglishUS:
+                        Log.Info("Changing keyboard language to EnglishUS.");
+                        InputService.RequestSuspend(); //Reloading the dictionary locks the UI thread, so suspend input service to prevent accidental selections until complete
+                        Settings.Default.KeyboardAndDictionaryLanguage = Languages.EnglishUS;
+                        InputService.RequestResume();
+                        Log.Info("Changing keyboard to Menu.");
+                        Keyboard = new Menu(() => Keyboard = currentKeyboard);
+                        break;
+
                     case FunctionKeys.ExpandDock:
                         Log.Info("Expanding dock.");
                         mainWindowManipulationService.ResizeDockToFull();
@@ -351,9 +394,34 @@ namespace JuliusSweetland.OptiKey.UI.ViewModels
                         mainWindowManipulationService.Expand(ExpandToDirections.TopRight, Settings.Default.MoveAndResizeAdjustmentAmountInPixels);
                         break;
 
+                    case FunctionKeys.FrenchFrance:
+                        Log.Info("Changing keyboard language to FrenchFrance.");
+                        InputService.RequestSuspend(); //Reloading the dictionary locks the UI thread, so suspend input service to prevent accidental selections until complete
+                        Settings.Default.KeyboardAndDictionaryLanguage = Languages.FrenchFrance;
+                        InputService.RequestResume();
+                        Log.Info("Changing keyboard to Menu.");
+                        Keyboard = new Menu(() => Keyboard = currentKeyboard);
+                        break;
+
+                    case FunctionKeys.GermanGermany:
+                        Log.Info("Changing keyboard language to GermanGermany.");
+                        InputService.RequestSuspend(); //Reloading the dictionary locks the UI thread, so suspend input service to prevent accidental selections until complete
+                        Settings.Default.KeyboardAndDictionaryLanguage = Languages.GermanGermany;
+                        InputService.RequestResume();
+                        Log.Info("Changing keyboard to Menu.");
+                        Keyboard = new Menu(() => Keyboard = currentKeyboard);
+                        break;
+
                     case FunctionKeys.IncreaseOpacity:
                         Log.Info("Increasing opacity.");
                         mainWindowManipulationService.IncrementOrDecrementOpacity(true);
+                        break;
+
+                    case FunctionKeys.LanguageKeyboard:
+                        Log.Info("Restoring window size.");
+                        mainWindowManipulationService.Restore();
+                        Log.Info("Changing keyboard to Language.");
+                        Keyboard = new Language(() => Keyboard = currentKeyboard);
                         break;
 
                     case FunctionKeys.MenuKeyboard:
@@ -464,20 +532,10 @@ namespace JuliusSweetland.OptiKey.UI.ViewModels
                         if (keyStateService.SimulateKeyStrokes
                             && Settings.Default.SuppressModifierKeysWhenInMouseKeyboard)
                         {
-                            var lastLeftShiftValue = keyStateService.KeyDownStates[KeyValues.LeftShiftKey].Value;
-                            var lastLeftCtrlValue = keyStateService.KeyDownStates[KeyValues.LeftCtrlKey].Value;
-                            var lastLeftWinValue = keyStateService.KeyDownStates[KeyValues.LeftWinKey].Value;
-                            var lastLeftAltValue = keyStateService.KeyDownStates[KeyValues.LeftAltKey].Value;
-                            keyStateService.KeyDownStates[KeyValues.LeftShiftKey].Value = KeyDownStates.Up;
-                            keyStateService.KeyDownStates[KeyValues.LeftCtrlKey].Value = KeyDownStates.Up;
-                            keyStateService.KeyDownStates[KeyValues.LeftWinKey].Value = KeyDownStates.Up;
-                            keyStateService.KeyDownStates[KeyValues.LeftAltKey].Value = KeyDownStates.Up;
+                            var restoreModifierStates = keyStateService.ReleaseModifiers(Log);
                             backAction = () =>
                             {
-                                keyStateService.KeyDownStates[KeyValues.LeftShiftKey].Value = lastLeftShiftValue;
-                                keyStateService.KeyDownStates[KeyValues.LeftCtrlKey].Value = lastLeftCtrlValue;
-                                keyStateService.KeyDownStates[KeyValues.LeftWinKey].Value = lastLeftWinValue;
-                                keyStateService.KeyDownStates[KeyValues.LeftAltKey].Value = lastLeftAltValue;
+                                restoreModifierStates();
                                 Keyboard = currentKeyboard;
                             };
                         }
@@ -718,7 +776,7 @@ namespace JuliusSweetland.OptiKey.UI.ViewModels
                             }
 
                             ResetAndCleanupAfterMouseAction();
-                        });
+                        }, suppressMagnification:true);
                         break;
 
                     case FunctionKeys.MouseMoveAndScrollToLeft:
@@ -739,7 +797,7 @@ namespace JuliusSweetland.OptiKey.UI.ViewModels
                             }
 
                             ResetAndCleanupAfterMouseAction();
-                        });
+                        }, suppressMagnification: true);
                         break;
 
                     case FunctionKeys.MouseMoveAndScrollToRight:
@@ -760,7 +818,7 @@ namespace JuliusSweetland.OptiKey.UI.ViewModels
                             }
 
                             ResetAndCleanupAfterMouseAction();
-                        });
+                        }, suppressMagnification: true);
                         break;
 
                     case FunctionKeys.MouseMoveAndScrollToTop:
@@ -780,8 +838,8 @@ namespace JuliusSweetland.OptiKey.UI.ViewModels
                                 simulateScrollToTop(finalPoint.Value);
                             }
 
-                            ResetAndCleanupAfterMouseAction();  
-                        });
+                            ResetAndCleanupAfterMouseAction();
+                        }, suppressMagnification: true);
                         break;
 
                     case FunctionKeys.MouseMoveTo:
@@ -1087,6 +1145,15 @@ namespace JuliusSweetland.OptiKey.UI.ViewModels
                         }
                         break;
 
+                    case FunctionKeys.RussianRussia:
+                        Log.Info("Changing keyboard language to RussianRussia.");
+                        InputService.RequestSuspend(); //Reloading the dictionary locks the UI thread, so suspend input service to prevent accidental selections until complete
+                        Settings.Default.KeyboardAndDictionaryLanguage = Languages.RussianRussia;
+                        InputService.RequestResume();
+                        Log.Info("Changing keyboard to Menu.");
+                        Keyboard = new Menu(() => Keyboard = currentKeyboard);
+                        break;
+
                     case FunctionKeys.ShrinkFromBottom:
                         Log.InfoFormat("Shrinking from bottom by {0}px.", Settings.Default.MoveAndResizeAdjustmentAmountInPixels);
                         mainWindowManipulationService.Shrink(ShrinkFromDirections.Bottom, Settings.Default.MoveAndResizeAdjustmentAmountInPixels);
@@ -1151,11 +1218,12 @@ namespace JuliusSweetland.OptiKey.UI.ViewModels
             }
         }
 
-        private void SetupFinalClickAction(Action<Point?> finalClickAction, bool finalClickInSeries = true)
+        private void SetupFinalClickAction(Action<Point?> finalClickAction, bool finalClickInSeries = true, bool suppressMagnification = false)
         {
             nextPointSelectionAction = nextPoint =>
             {
-                if (keyStateService.KeyDownStates[KeyValues.MouseMagnifierKey].Value.IsDownOrLockedDown())
+                if (!suppressMagnification 
+                    && keyStateService.KeyDownStates[KeyValues.MouseMagnifierKey].Value.IsDownOrLockedDown())
                 {
                     ShowCursor = false; //Ensure cursor is not showing when MagnifyAtPoint is set because...
                     //1.This triggers a screen capture, which shouldn't have the cursor in it.
@@ -1192,7 +1260,7 @@ namespace JuliusSweetland.OptiKey.UI.ViewModels
             }
         }
 
-        public void HandleServiceError(object sender, Exception exception)
+        private void HandleServiceError(object sender, Exception exception)
         {
             Log.Error("Error event received from service. Raising ErrorNotificationRequest and playing ErrorSoundFile (from settings)", exception);
 
